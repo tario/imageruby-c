@@ -59,9 +59,9 @@ VALUE c_draw_with_mask(VALUE self, VALUE rb_x, VALUE rb_y, VALUE rb_image, VALUE
 				image_pixel_data[x_*3+2] != color_string[2]
 				) {
 
-				self_pixel_data[x_*3] = self_pixel_data[0];
-				self_pixel_data[x_*3+1] = self_pixel_data[1];
-				self_pixel_data[x_*3+2] = self_pixel_data[2];
+				self_pixel_data[x_*3] = image_pixel_data[x_*3];
+				self_pixel_data[x_*3+1] = image_pixel_data[x_*3+1];
+				self_pixel_data[x_*3+2] = image_pixel_data[x_*3+2];
 			}
 		}
 
