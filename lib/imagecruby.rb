@@ -19,3 +19,11 @@ along with imagecruby.  if not, see <http://www.gnu.org/licenses/>.
 
 =end
 require "imagecruby_base"
+
+module ImageRuby
+  class Image
+    def draw(x,y,image,mask_color=nil)
+      c_draw(x,y,image,mask_color || "\000\000\000")
+    end
+  end
+end
