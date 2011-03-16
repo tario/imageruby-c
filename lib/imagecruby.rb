@@ -24,9 +24,9 @@ module ImageRuby
   class Image
     def draw(x,y,image,mask_color=nil)
       if mask_color
-        c_draw(x,y,image)
-      else
         c_draw_with_mask(x,y,image,mask_color)
+      else
+        c_draw(x,y,image)
       end
     end
   end
