@@ -23,7 +23,11 @@ require "imagecruby_base"
 module ImageRuby
   class Image
     def draw(x,y,image,mask_color=nil)
-      c_draw(x,y,image,mask_color || "\000\000\000")
+      if mask_color
+        c_draw(x,y,image)
+      else
+        c_draw_with_mask(x,y,image,mask_color)
+      end
     end
   end
 end
