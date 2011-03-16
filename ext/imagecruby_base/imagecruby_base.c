@@ -48,9 +48,22 @@ VALUE c_draw_with_mask(VALUE self, VALUE rb_x, VALUE rb_y, VALUE rb_image, VALUE
 	self_pixel_data += (x + y * self_width) * 3;
 
 	int y_;
+	int x_;
 	for (y_ = 0; y_ < image_height; y_++) {
 
-		memcpy(self_pixel_data, image_pixel_data, image_width*3);
+		for (x_ = 0; x_ < image_width; x_++) {
+
+			if (
+				image_pixel_data[x_*3] != color_string[0] ||
+				image_pixel_data[x_*3+1] != color_string[1] ||
+				image_pixel_data[x_*3+2] != color_string[2]
+				) {
+
+				self_pixel_data[x_*3] = self_pixel_data[0];
+				self_pixel_data[x_*3+1] = self_pixel_data[1];
+				self_pixel_data[x_*3+2] = self_pixel_data[2];
+			}
+		}
 
 		self_pixel_data += (self_width * 3);
 		image_pixel_data += (image_width * 3);
