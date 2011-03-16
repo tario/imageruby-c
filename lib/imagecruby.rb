@@ -1,6 +1,6 @@
 =begin
 
-This file is part of the imagecruby project, http://github.com/tario/imageruby
+This file is part of the imagecruby project, http://github.com/tario/imagecruby
 
 Copyright (c) 2011 Roberto Dario Seminara <robertodarioseminara@gmail.com>
 
