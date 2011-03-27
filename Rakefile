@@ -5,13 +5,13 @@ require 'rake/rdoctask'
 require 'rake/gempackagetask'
 
 spec = Gem::Specification.new do |s|
-  s.name = 'imagecruby'
+  s.name = 'imageruby-c'
   s.version = '0.0.1'
   s.author = 'Dario Seminara'
   s.email = 'robertodarioseminara@gmail.com'
   s.platform = Gem::Platform::RUBY
   s.summary = 'C implementation of some of the ImageRuby methods'
-  s.homepage = "http://github.com/tario/imagecruby"
+  s.homepage = "http://github.com/tario/imageruby-c"
   s.has_rdoc = true
   s.extra_rdoc_files = [ 'README' ]
   s.rdoc_options << '--main' << 'README'
