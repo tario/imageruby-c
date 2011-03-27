@@ -21,7 +21,8 @@ along with imagecruby.  if not, see <http://www.gnu.org/licenses/>.
 require "imagecruby_base"
 
 module ImageRuby
-  class Image
+
+  module ImageRubyCMixin
     def draw(x,y,image,mask_color=nil)
       if mask_color
         c_draw_with_mask(x,y,image,mask_color)
@@ -34,4 +35,7 @@ module ImageRuby
       c_color_replace(color1, color2)
     end
   end
+
+  register_image_mixin ImageRubyCMixin
+
 end

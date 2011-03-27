@@ -146,7 +146,7 @@ VALUE c_draw(VALUE self, VALUE rb_x, VALUE rb_y, VALUE rb_image) {
 
 extern void Init_imagecruby_base() {
 	m_ImageRuby = rb_define_module("ImageRuby");
-	c_ImageRuby_Image = rb_define_class_under(m_ImageRuby, "Image", rb_cObject);
+	c_ImageRuby_Image = rb_define_module_under(m_ImageRuby, "ImageRubyCMixin");
 
 	rb_define_method(c_ImageRuby_Image, "c_draw", c_draw, 3);
 	rb_define_method(c_ImageRuby_Image, "c_draw_with_mask", c_draw_with_mask, 4);
