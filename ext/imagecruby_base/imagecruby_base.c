@@ -25,6 +25,44 @@ VALUE m_ImageRuby;
 ID id_to_s, id_pixel_data;
 ID id_width, id_height;
 
+VALUE c_color_replace(VALUE self, VALUE rb_color1, VALUE rb_color2) {
+	VALUE rb_color1_string = rb_funcall(rb_color1, id_to_s, 0);
+	const char* color1_string = RSTRING(rb_color1_string)->ptr;
+
+	VALUE rb_color2_string = rb_funcall(rb_color2, id_to_s, 0);
+	const char* color2_string = RSTRING(rb_color2_string)->ptr;
+
+	int self_width = FIX2INT( rb_funcall(self, id_width, 0) );
+	int self_height = FIX2INT( rb_funcall(self, id_height, 0) );
+
+	VALUE rb_self_pixel_data = rb_funcall(self, id_pixel_data, 0);
+	char* self_pixel_data = RSTRING(rb_self_pixel_data)->ptr;
+
+	int y_;
+	int x_;
+	for (y_ = 0; y_ < self_height; y_++) {
+
+		for (x_ = 0; x_ < self_width; x_++) {
+
+			if (
+				self_pixel_data[x_*3] == color1_string[0] &&
+				self_pixel_data[x_*3+1] == color1_string[1] &&
+				self_pixel_data[x_*3+2] == color1_string[2]
+				) {
+
+				self_pixel_data[x_*3] = color2_string[0];
+				self_pixel_data[x_*3+1] = color2_string[1];
+				self_pixel_data[x_*3+2] = color2_string[2];
+			}
+		}
+
+		self_pixel_data += (self_width * 3);
+
+	}
+
+	return self;
+}
+
 VALUE c_draw_with_mask(VALUE self, VALUE rb_x, VALUE rb_y, VALUE rb_image, VALUE rb_mask_color) {
 
 	int x = FIX2INT(rb_x);
@@ -112,6 +150,7 @@ extern void Init_imagecruby_base() {
 
 	rb_define_method(c_ImageRuby_Image, "c_draw", c_draw, 3);
 	rb_define_method(c_ImageRuby_Image, "c_draw_with_mask", c_draw_with_mask, 4);
+	rb_define_method(c_ImageRuby_Image, "c_color_replace", c_color_replace, 2);
 
 	id_to_s = rb_intern("to_s");
 	id_pixel_data = rb_intern("pixel_data");

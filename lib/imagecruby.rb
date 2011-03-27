@@ -29,5 +29,9 @@ module ImageRuby
         c_draw(x,y,image)
       end
     end
+
+    def color_replace!(color1, color2)
+      c_color_replace(color1, color2)
+    end
   end
 end
