@@ -58,7 +58,7 @@ VALUE c_color_replace(VALUE self, VALUE rb_color1, VALUE rb_color2) {
 				self_pixel_data[x_*3] = color2_string[0];
 				self_pixel_data[x_*3+1] = color2_string[1];
 				self_pixel_data[x_*3+2] = color2_string[2];
-				self_pixel_data[x_] = color2_alpha;
+				self_alpha_data[x_] = color2_alpha;
 			}
 		}
 
