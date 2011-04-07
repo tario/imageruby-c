@@ -22,8 +22,8 @@ along with imagecruby.  if not, see <http://www.gnu.org/licenses/>.
 
 VALUE c_ImageRuby_Image;
 VALUE m_ImageRuby;
-ID id_to_s, id_pixel_data;
-ID id_width, id_height;
+ID id_to_s, id_pixel_data, id_alpha_data;
+ID id_width, id_height, id_a;
 
 VALUE c_color_replace(VALUE self, VALUE rb_color1, VALUE rb_color2) {
 	VALUE rb_color1_string = rb_funcall(rb_color1, id_to_s, 0);
@@ -32,11 +32,16 @@ VALUE c_color_replace(VALUE self, VALUE rb_color1, VALUE rb_color2) {
 	VALUE rb_color2_string = rb_funcall(rb_color2, id_to_s, 0);
 	const char* color2_string = RSTRING(rb_color2_string)->ptr;
 
+	int color2_alpha = INT2FIX( rb_funcall(rb_color2, id_a, 0) );
+
 	int self_width = FIX2INT( rb_funcall(self, id_width, 0) );
 	int self_height = FIX2INT( rb_funcall(self, id_height, 0) );
 
 	VALUE rb_self_pixel_data = rb_funcall(self, id_pixel_data, 0);
 	char* self_pixel_data = RSTRING(rb_self_pixel_data)->ptr;
+
+	VALUE rb_self_alpha_data = rb_funcall(self, id_alpha_data, 0);
+	char* self_alpha_data = RSTRING(rb_self_alpha_data)->ptr;
 
 	int y_;
 	int x_;
@@ -53,16 +58,18 @@ VALUE c_color_replace(VALUE self, VALUE rb_color1, VALUE rb_color2) {
 				self_pixel_data[x_*3] = color2_string[0];
 				self_pixel_data[x_*3+1] = color2_string[1];
 				self_pixel_data[x_*3+2] = color2_string[2];
+				self_pixel_data[x_] = color2_alpha;
 			}
 		}
 
+		self_alpha_data += self_width;
 		self_pixel_data += (self_width * 3);
 
 	}
 
 	return self;
 }
-
+/*
 VALUE c_draw_with_mask(VALUE self, VALUE rb_x, VALUE rb_y, VALUE rb_image, VALUE rb_mask_color) {
 
 	int x = FIX2INT(rb_x);
@@ -110,7 +117,7 @@ VALUE c_draw_with_mask(VALUE self, VALUE rb_x, VALUE rb_y, VALUE rb_image, VALUE
 
 	return self;
 
-}
+}*/
 
 VALUE c_draw(VALUE self, VALUE rb_x, VALUE rb_y, VALUE rb_image) {
 
@@ -149,12 +156,14 @@ extern void Init_imagecruby_base() {
 	c_ImageRuby_Image = rb_define_module_under(m_ImageRuby, "ImageRubyCMixin");
 
 	rb_define_method(c_ImageRuby_Image, "c_draw", c_draw, 3);
-	rb_define_method(c_ImageRuby_Image, "c_draw_with_mask", c_draw_with_mask, 4);
 	rb_define_method(c_ImageRuby_Image, "c_color_replace", c_color_replace, 2);
 
 	id_to_s = rb_intern("to_s");
 	id_pixel_data = rb_intern("pixel_data");
+	id_alpha_data = rb_intern("alpha_data");
 
 	id_width = rb_intern("width");
 	id_height = rb_intern("height");
+
+	id_a = rb_intern("a");
 }

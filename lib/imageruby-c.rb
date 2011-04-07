@@ -23,12 +23,8 @@ require "imagecruby_base"
 module ImageRuby
 
   module ImageRubyCMixin
-    def draw(x,y,image,mask_color=nil)
-      if mask_color
-        c_draw_with_mask(x,y,image,mask_color)
-      else
-        c_draw(x,y,image)
-      end
+    def draw(x,y,image)
+      c_draw(x,y,image)
     end
 
     def color_replace!(color1, color2)
