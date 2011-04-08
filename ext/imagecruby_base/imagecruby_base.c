@@ -32,7 +32,7 @@ VALUE c_color_replace(VALUE self, VALUE rb_color1, VALUE rb_color2) {
 	VALUE rb_color2_string = rb_funcall(rb_color2, id_to_s, 0);
 	const char* color2_string = RSTRING(rb_color2_string)->ptr;
 
-	int color2_alpha = INT2FIX( rb_funcall(rb_color2, id_a, 0) );
+	int color2_alpha = FIX2INT( rb_funcall(rb_color2, id_a, 0) );
 
 	int self_width = FIX2INT( rb_funcall(self, id_width, 0) );
 	int self_height = FIX2INT( rb_funcall(self, id_height, 0) );
