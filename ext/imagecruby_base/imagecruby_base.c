@@ -136,13 +136,33 @@ VALUE c_draw(VALUE self, VALUE rb_x, VALUE rb_y, VALUE rb_image) {
 	VALUE rb_self_pixel_data = rb_funcall(self, id_pixel_data, 0);
 	char* self_pixel_data = RSTRING(rb_self_pixel_data)->ptr;
 
+	VALUE rb_self_alpha_data = rb_funcall(self, id_alpha_data, 0);
+	char* self_alpha_data = RSTRING(rb_self_alpha_data)->ptr;
+
+	self_alpha_data += (x + y * self.height);
 	self_pixel_data += (x + y * self_width) * 3;
 
 	int y_;
+	int x_;
 	for (y_ = 0; y_ < image_height; y_++) {
 
-		memcpy(self_pixel_data, image_pixel_data, image_width*3);
+		for (x_ = 0; x_ < image_width; x_++) {
 
+			int alpha = self_alpha_data[x_];
+			if (alpha < 255) {
+				if (alpha > 0) {
+					self_pixel_data[x_*3] = ( self_pixel_data[x_*3]*(255-alpha) + image_pixel_data[x_*3]*alpha ) / 255;
+					self_pixel_data[x_*3+1] = ( self_pixel_data[x_*3+1]*(255-alpha) + image_pixel_data[x_*3+1]*alpha ) / 255;
+					self_pixel_data[x_*3+2] = ( self_pixel_data[x_*3+2]*(255-alpha) + image_pixel_data[x_*3+2]*alpha ) / 255;
+				}
+			} else {
+				self_pixel_data[x_*3] = image_pixel_data[x_*3];
+				self_pixel_data[x_*3+1] = image_pixel_data[x_*3+1];
+				self_pixel_data[x_*3+2] = image_pixel_data[x_*3+2];
+			}
+		}
+
+		self_alpha_data += self_width;
 		self_pixel_data += (self_width * 3);
 		image_pixel_data += (image_width * 3);
 
