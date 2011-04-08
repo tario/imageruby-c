@@ -139,7 +139,7 @@ VALUE c_draw(VALUE self, VALUE rb_x, VALUE rb_y, VALUE rb_image) {
 	VALUE rb_self_alpha_data = rb_funcall(self, id_alpha_data, 0);
 	char* self_alpha_data = RSTRING(rb_self_alpha_data)->ptr;
 
-	self_alpha_data += (x + y * self.height);
+	self_alpha_data += (x + y * self_width);
 	self_pixel_data += (x + y * self_width) * 3;
 
 	int y_;
