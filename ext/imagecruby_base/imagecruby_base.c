@@ -131,15 +131,14 @@ VALUE c_draw(VALUE self, VALUE rb_x, VALUE rb_y, VALUE rb_image) {
 	int self_height = FIX2INT( rb_funcall(self, id_height, 0) );
 
 	VALUE rb_image_pixel_data = rb_funcall(rb_image, id_pixel_data, 0);
-	const char* image_pixel_data = RSTRING(rb_image_pixel_data)->ptr;
+	const unsigned char* image_pixel_data = RSTRING(rb_image_pixel_data)->ptr;
 
 	VALUE rb_self_pixel_data = rb_funcall(self, id_pixel_data, 0);
-	char* self_pixel_data = RSTRING(rb_self_pixel_data)->ptr;
+	unsigned char* self_pixel_data = RSTRING(rb_self_pixel_data)->ptr;
 
-	VALUE rb_self_alpha_data = rb_funcall(self, id_alpha_data, 0);
-	char* self_alpha_data = RSTRING(rb_self_alpha_data)->ptr;
+	VALUE rb_image_alpha_data = rb_funcall(rb_image, id_alpha_data, 0);
+	unsigned char* image_alpha_data = RSTRING(rb_image_alpha_data)->ptr;
 
-	self_alpha_data += (x + y * self_width);
 	self_pixel_data += (x + y * self_width) * 3;
 
 	int y_;
@@ -148,7 +147,8 @@ VALUE c_draw(VALUE self, VALUE rb_x, VALUE rb_y, VALUE rb_image) {
 
 		for (x_ = 0; x_ < image_width; x_++) {
 
-			int alpha = self_alpha_data[x_];
+			unsigned int alpha = image_alpha_data[x_];
+
 			if (alpha < 255) {
 				if (alpha > 0) {
 					self_pixel_data[x_*3] = ( self_pixel_data[x_*3]*(255-alpha) + image_pixel_data[x_*3]*alpha ) / 255;
@@ -162,8 +162,8 @@ VALUE c_draw(VALUE self, VALUE rb_x, VALUE rb_y, VALUE rb_image) {
 			}
 		}
 
-		self_alpha_data += self_width;
 		self_pixel_data += (self_width * 3);
+		image_alpha_data += image_width;
 		image_pixel_data += (image_width * 3);
 
 	}
