@@ -23,7 +23,7 @@ require "imagecruby_base"
 module ImageRuby
 
   module ImageRubyCMixin
-    def draw(x,y,image)
+    def draw!(x,y,image)
       c_draw(x,y,image)
     end
 
