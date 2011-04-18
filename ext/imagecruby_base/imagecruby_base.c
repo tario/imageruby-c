@@ -141,11 +141,17 @@ VALUE c_draw(VALUE self, VALUE rb_x, VALUE rb_y, VALUE rb_image) {
 
 	self_pixel_data += (x + y * self_width) * 3;
 
+	int included_image_width = image_width;
+
+	if (x + included_image_width > self_width) {
+		included_image_width = self_width - x;
+	}
+
 	int y_;
 	int x_;
 	for (y_ = 0; y_ < image_height; y_++) {
 
-		for (x_ = 0; x_ < image_width; x_++) {
+		for (x_ = 0; x_ < included_image_width; x_++) {
 
 			unsigned int alpha = image_alpha_data[x_];
 
