@@ -1,0 +1,18 @@
+= ImageRuby-c - C-Extension replacement for color_replace! and draw! methods
+
+Reimplements draw! and color_replace! methods of ImageRuby::Image class in C to make these operations 100X faster. 
+draw and color_replace method are also affected because they use  draw! and color_replace!
+
+== Installation
+
+=== Gem installation
+
+sudo gem install imageruby-c
+
+== Usage
+
+No explicit require is needed. Only with the gem installed, imageruby will include this improvement automagically
+  
+== Copying
+
+Copyright (c) 2011 Dario Seminara, released under the GPL License (see LICENSE)
