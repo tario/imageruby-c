@@ -6,7 +6,7 @@ require 'rake/gempackagetask'
 
 spec = Gem::Specification.new do |s|
   s.name = 'imageruby-c'
-  s.version = '0.0.1'
+  s.version = '0.1.0'
   s.author = 'Dario Seminara'
   s.email = 'robertodarioseminara@gmail.com'
   s.platform = Gem::Platform::RUBY
@@ -16,7 +16,7 @@ spec = Gem::Specification.new do |s|
   s.extra_rdoc_files = [ 'README' ]
   s.rdoc_options << '--main' << 'README'
   s.extensions = FileList["ext/**/extconf.rb"].to_a
-  s.files = Dir.glob("{examples,lib,test}/**/*.rb") + Dir.glob("ext/**/*.c") + Dir.glob("ext/**/*.h") + Dir.glob("ext/**/extconf.rb") +
+  s.files = Dir.glob("{lib}/**/*.rb") + Dir.glob("ext/**/*.c") + Dir.glob("ext/**/*.h") + Dir.glob("ext/**/extconf.rb") +
     [ 'LICENSE', 'AUTHORS', 'CHANGELOG', 'README', 'Rakefile', 'TODO' ]
 end
 
