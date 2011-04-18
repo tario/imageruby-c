@@ -1,6 +1,6 @@
 = ImageRuby-c - C-Extension replacement for color_replace! and draw! methods
 
-Reimplements draw! and color_replace! methods of ImageRuby::Image class in C to make these operations 100X faster. 
+Reimplements draw! and color_replace! methods of ImageRuby::Image class in C to make these operations up to 100X more faster. 
 draw and color_replace method are also affected because they use  draw! and color_replace!
 
 == Installation
